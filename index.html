@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>That Girl Reset ✨</title>
+
+  <!-- Cute fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+  <!-- OPTIONAL: AdSense (paste your script snippet here, above </head>) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX"
+    crossorigin="anonymous"></script>
+  -->
+
+  <style>
+    :root{
+      --bg1:#ffd6e7; --bg2:#fff0f7; --bg3:#f7d6ff;
+      --card:#ffffffcc; --card2:#fff7fbcc;
+      --ink:#4a2a3a; --muted:#7a4a62;
+      --hot:#ff4fa1; --hot2:#ff7bc0; --line:#ffb3d6;
+      --shadow: 0 18px 45px rgba(255, 79, 161, .18);
+      --shadow2: 0 10px 25px rgba(74, 42, 58, .12);
+      --radius: 26px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1100px 700px at 15% 10%, var(--bg2), transparent 62%),
+        radial-gradient(900px 600px at 85% 22%, var(--bg3), transparent 58%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.12;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+    }
+
+    .floatLayer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0}
+    .float{
+      position:absolute; bottom:-60px; left:var(--x,50%);
+      font-size:var(--s,18px); opacity:var(--o,.35);
+      filter: blur(var(--b,0px));
+      transform: translateY(0) rotate(var(--r,0deg));
+      animation: rise var(--d, 10s) linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes rise{
+      0%{transform:translateY(0) translateX(0) rotate(var(--r)); opacity:0}
+      12%{opacity:var(--o)}
+      100%{transform:translateY(-120vh) translateX(var(--drift,60px)) rotate(calc(var(--r) + 120deg)); opacity:0}
+    }
+
+    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:80}
+    .conf{
+      position:absolute; top:-30px; left:var(--x);
+      width: 10px; height: 18px; border-radius: 3px;
+      background: var(--c); opacity:.92;
+      transform: rotate(var(--rot));
+      animation: fall var(--t) ease-in forwards;
+      filter: drop-shadow(0 6px 10px rgba(255,79,161,.20));
+    }
+    @keyframes fall{
+      to{ top:110vh; transform: translateX(var(--dx)) rotate(calc(var(--rot) + 360deg)); opacity:0;}
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding: clamp(18px, 3vw, 32px);
+      position:relative; z-index:2;
+    }
+    .container{width:min(980px, 100%)}
+
+    header{text-align:center; margin-bottom:14px}
+    .logo{
+      font-family:"Pacifico", cursive;
+      font-size: clamp(30px, 4.2vw, 46px);
+      color:#ff2f97;
+      text-shadow: 0 10px 30px rgba(255, 79, 161, .22);
+      animation: floaty 3.8s ease-in-out infinite;
+      user-select:none;
+    }
+    .subtitle{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-weight:700;
+      opacity:.95;
+    }
+    @keyframes floaty{0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid rgba(255, 179, 214, .75);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), var(--shadow2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+      transform: translateY(10px);
+      opacity:0;
+      animation: popIn .75s cubic-bezier(.2,.9,.2,1) forwards;
+    }
+    @keyframes popIn{to{transform:translateY(0); opacity:1}}
+    .card::after{
+      content:"";
+      position:absolute; inset:-60px -60px auto auto;
+      width:190px; height:190px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 79, 161, .24), transparent 62%);
+      transform: rotate(25deg);
+      pointer-events:none;
+    }
+
+    .row{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,179,214,.9);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 8px 18px rgba(255,79,161,.12);
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      user-select:none;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--hot));
+      box-shadow: 0 0 0 5px rgba(255,79,161,.14);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1); opacity:.95} 50%{transform:scale(1.15); opacity:.75}}
+
+    .toggle{
+      cursor:pointer;
+      border:none;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255, 179, 214, .9);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight:800;
+      color: var(--muted);
+      box-shadow: 0 8px 18px rgba(255, 79, 161, .10);
+      transition: transform .15s ease, box-shadow .15s ease;
+      user-select:none;
+    }
+    .toggle:hover{transform:translateY(-1px); box-shadow:0 12px 24px rgba(255,79,161,.14)}
+    .toggle:active{transform:translateY(0)}
+
+    .hero{
+      margin-top:14px;
+      border-radius: 22px;
+      border: 1px dashed rgba(255,79,161,.40);
+      background: rgba(255,255,255,.62);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* Breathing ring */
+    .breathWrap{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items:center;
+      justify-items:center;
+      padding: 8px 0 2px;
+    }
+    .ring{
+      width: min(280px, 70vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      position:relative;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+      box-shadow: 0 16px 36px rgba(255,79,161,.18);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.55) 55%, rgba(255,255,255,.20) 74%, transparent 76%),
+        radial-gradient(circle at 70% 70%, rgba(255,79,161,.22), transparent 55%),
+        radial-gradient(circle at 40% 80%, rgba(247,176,255,.22), transparent 50%);
+      border: 1px solid rgba(255,179,214,.75);
+      overflow:hidden;
+    }
+    .ring::before{
+      content:"";
+      position:absolute; inset:-30%;
+      background: conic-gradient(from 90deg, rgba(255,79,161,.0), rgba(255,79,161,.35), rgba(247,176,255,.35), rgba(255,79,161,.0));
+      filter: blur(10px);
+      opacity:.65;
+      animation: spin 9s linear infinite;
+      z-index:-1;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .ringCore{
+      width: 68%;
+      aspect-ratio:1/1;
+      border-radius:999px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,179,214,.9);
+      display:grid;
+      place-items:center;
+      transition: transform .25s ease;
+    }
+
+    .phase{
+      font-weight:900;
+      font-size: 18px;
+      color: #ff2f97;
+      text-shadow: 0 10px 26px rgba(255,79,161,.16);
+      user-select:none;
+    }
+    .timer{
+      margin-top:4px;
+      font-weight:900;
+      font-size: 34px;
+      letter-spacing:.5px;
+      color: var(--ink);
+      user-select:none;
+    }
+
+    .ring.running .ringCore{ animation: breathe var(--cycle, 4s) ease-in-out infinite; }
+    @keyframes breathe{
+      0%{transform: scale(0.88)}
+      50%{transform: scale(1.06)}
+      100%{transform: scale(0.88)}
+    }
+
+    .msg{
+      margin: 10px 2px 0;
+      text-align:center;
+      font-weight:900;
+      font-size: clamp(16px, 2.1vw, 20px);
+      line-height:1.25;
+    }
+    .msg.animate{animation: shimmer .55s ease}
+    @keyframes shimmer{
+      0%{transform:translateY(8px); opacity:0; filter:blur(1px)}
+      100%{transform:translateY(0); opacity:1; filter:blur(0)}
+    }
+    .hint{
+      text-align:center;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      margin-top:8px;
+    }
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top: 14px}
+    .btn{
+      cursor:pointer; border:none;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      color:#fff;
+      background: linear-gradient(135deg, var(--hot), var(--hot2));
+      box-shadow: 0 14px 30px rgba(255,79,161,.22);
+      transition: transform .16s ease, box-shadow .16s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-2px) scale(1.01); box-shadow:0 18px 40px rgba(255,79,161,.28)}
+    .btn:active{transform:translateY(0)}
+    .btn.secondary{
+      color:var(--ink);
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,179,214,.9);
+      box-shadow: 0 10px 22px rgba(74,42,58,.10);
+    }
+    .btn.ghost{
+      color: var(--hot);
+      background: rgba(255,255,255,.25);
+      border: 1px solid rgba(255,79,161,.35);
+      box-shadow:none;
+    }
+
+    .panelTitle{
+      font-weight:900;
+      color:#ff2f97;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin: 0 0 10px;
+    }
+    .mini{
+      cursor:pointer;
+      border:none;
+      border-radius: 14px;
+      padding: 8px 10px;
+      font-weight: 900;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255, 179, 214, .9);
+      color: var(--muted);
+      transition: transform .15s ease, background .2s ease;
+      user-select:none;
+    }
+    .mini:hover{transform:translateY(-1px); background:rgba(255,255,255,.9)}
+    .mini:active{transform:translateY(0)}
+
+    .list{
+      list-style:none; margin:0; padding:0;
+      display:flex; flex-direction:column; gap:10px;
+      max-height: 320px; overflow:auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,79,161,.35) transparent;
+    }
+    .list::-webkit-scrollbar{width:10px}
+    .list::-webkit-scrollbar-thumb{
+      background: rgba(255,79,161,.35);
+      border-radius: 999px;
+      border: 3px solid transparent;
+      background-clip: content-box;
+    }
+    .item{
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(255,179,214,.75);
+      border-radius: 18px;
+      padding: 10px 10px 10px 12px;
+      display:flex; gap:10px;
+      align-items:flex-start; justify-content:space-between;
+      transition: transform .14s ease;
+    }
+    .item:hover{transform:translateY(-1px)}
+    .item p{margin:0; font-weight:900; line-height:1.2; font-size:14px}
+    .item small{display:block; margin-top:4px; color:var(--muted); font-weight:800; font-size:12px; opacity:.9}
+    .itemBtns{display:flex; gap:8px; flex:0 0 auto; margin-left:8px}
+
+    .footerNote{
+      text-align:center;
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+      opacity:.95;
+      margin-top: 10px;
+    }
+
+    /* Tiny toast */
+    #toast{
+      position:fixed; left:50%; bottom:22px;
+      transform:translateX(-50%);
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.82);
+      border:1px solid rgba(255,179,214,.95);
+      box-shadow:0 14px 30px rgba(255,79,161,.20);
+      color:rgba(74,42,58,.92);
+      font-weight:900;
+      z-index:99;
+      backdrop-filter: blur(10px);
+      opacity:0;
+      transition: opacity .2s ease, transform .2s ease;
+      pointer-events:none;
+    }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="floatLayer" id="floatLayer" aria-hidden="true"></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="container">
+      <header>
+        <div class="logo">That Girl Reset</div>
+        <p class="subtitle">30 seconds to feel calmer, cuter, and back in control 💗</p>
+      </header>
+
+      <main class="grid">
+        <!-- Main -->
+        <section class="card" aria-live="polite">
+          <div class="row">
+            <div class="pill"><span class="dot"></span><span id="todayLabel">Today</span></div>
+            <div class="row" style="justify-content:flex-end">
+              <button class="toggle" id="soundBtn" type="button" aria-pressed="true">🔊 Sound</button>
+              <button class="toggle" id="motionBtn" type="button" aria-pressed="true">💫 Motion</button>
+            </div>
+          </div>
+
+          <div class="hero">
+            <div class="breathWrap">
+              <div class="ring" id="ring">
+                <div class="ringCore">
+                  <div style="text-align:center">
+                    <div class="phase" id="phase">Tap reset</div>
+                    <div class="timer" id="timer">30</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="msg" id="message">When you’re ready, tap <span style="color:#ff2f97">Reset</span> ✨</div>
+              <div class="hint" id="hint">You’ll get a tiny task + a breathing animation. No pressure. Just softness.</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" id="resetBtn" type="button">🎀 Reset me</button>
+              <button class="btn secondary" id="saveBtn" type="button">💗 Save this reset</button>
+              <button class="btn ghost" id="shareBtn" type="button">📋 Copy link</button>
+            </div>
+
+            <!-- OPTIONAL: Ad unit placement example (once AdSense approved).
+                 You must create an ad unit in AdSense and paste the <ins class="adsbygoogle"> block here. -->
+            <!--
+            <div style="margin-top:14px; display:flex; justify-content:center">
+              <ins class="adsbygoogle"
+                   style="display:block; width:100%; max-width:480px; height:90px"
+                   data-ad-client="ca-pub-XXXX"
+                   data-ad-slot="XXXX"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            -->
+          </div>
+
+          <p class="footerNote">Tip: Safari → Share → <b>Add to Home Screen</b> so it feels like a real app 💗</p>
+        </section>
+
+        <!-- Side panels -->
+        <aside style="display:flex; flex-direction:column; gap:18px;">
+          <section class="card">
+            <div class="panelTitle">
+              <span>🫧 Saved resets</span>
+              <button class="mini" id="clearSaved" type="button" title="Clear saved">🧹</button>
+            </div>
+            <ul class="list" id="savedList"></ul>
+            <p class="footerNote" id="savedEmpty">Save your favorite resets so you can reuse them ✨</p>
+          </section>
+
+          <section class="card">
+            <div class="panelTitle">
+              <span>🌸 Recent</span>
+              <button class="mini" id="clearRecent" type="button" title="Clear recent">🧹</button>
+            </div>
+            <ul class="list" id="recentList"></ul>
+            <p class="footerNote" id="recentEmpty">Your last resets show up here 💞</p>
+          </section>
+        </aside>
+      </main>
+
+      <div id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script>
+    // That Girl Reset ✨
+    // Single-file HTML/CSS/JS. Works great as a hosted site (Render, Netlify, etc.)
+
+    const RESET_SECONDS = 30;
+
+    const TASKS = [
+      "Drink 6 sips of water 💧",
+      "Unclench your jaw + drop your shoulders 🌸",
+      "Open a window or step outside for 10 seconds 🍃",
+      "Put your hand on your chest and say “I’m safe” 💗",
+      "Tidy one tiny thing (just one!) 🫧",
+      "Stretch your neck slowly left + right 🩷",
+      "Blink slowly 10 times (reset your nervous system) ✨",
+      "Make your bed corner nicer (tiny win) 🎀",
+      "Text someone: “thinking of you 💕”",
+      "Wash your hands with warm water (sensory reset) 🧼",
+      "Lightly massage your temples for 10 seconds 🌙",
+      "Stand up and shake it out for 5 seconds 💃",
+      "Put on lip balm / moisturizer (micro self-care) 💄",
+      "Swap to a softer thought: “I’m doing my best” 🌸"
+    ];
+
+    const CALM_LINES = [
+      "You’re not behind. You’re human.",
+      "Tiny steps still count. Especially today.",
+      "Your nervous system deserves kindness.",
+      "Nothing is wrong with you. You’re just feeling a lot.",
+      "Let today be gentle. You can still be powerful.",
+      "Softness is a strategy.",
+      "You don’t have to earn rest."
+    ];
+
+    const FLOAT_EMOJIS = ["💗","✨","💖","🫧","🎀","🌸","💞","⭐","🩷"];
+
+    const STORAGE = {
+      saved: "that_girl_reset_saved_v1",
+      recent: "that_girl_reset_recent_v1",
+      settings: "that_girl_reset_settings_v1",
+      streak: "that_girl_reset_streak_v1"
+    };
+
+    // DOM
+    const todayLabel = document.getElementById("todayLabel");
+    const ring = document.getElementById("ring");
+    const phaseEl = document.getElementById("phase");
+    const timerEl = document.getElementById("timer");
+    const messageEl = document.getElementById("message");
+    const hintEl = document.getElementById("hint");
+
+    const resetBtn = document.getElementById("resetBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const shareBtn = document.getElementById("shareBtn");
+
+    const savedList = document.getElementById("savedList");
+    const recentList = document.getElementById("recentList");
+    const savedEmpty = document.getElementById("savedEmpty");
+    const recentEmpty = document.getElementById("recentEmpty");
+    const clearSaved = document.getElementById("clearSaved");
+    const clearRecent = document.getElementById("clearRecent");
+
+    const floatLayer = document.getElementById("floatLayer");
+    const confettiLayer = document.getElementById("confetti");
+
+    const toastEl = document.getElementById("toast");
+    const soundBtn = document.getElementById("soundBtn");
+    const motionBtn = document.getElementById("motionBtn");
+
+    // State
+    let soundOn = true;
+    let motionOn = true;
+
+    let running = false;
+    let tLeft = RESET_SECONDS;
+    let tickTimer = null;
+    let phaseTimer = null;
+    let currentReset = null;
+
+    // Utils
+    function formatDate(d){
+      return d.toLocaleDateString(undefined, { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+    }
+    function loadJSON(key, fallback){
+      try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }catch{ return fallback; }
+    }
+    function saveJSON(key, value){
+      try{ localStorage.setItem(key, JSON.stringify(value)); }catch{}
+    }
+    function dedupe(arr){
+      return [...new Map(arr.map(x => [JSON.stringify(x), x])).values()];
+    }
+    function pick(arr){
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+    function animateMsg(){
+      messageEl.classList.remove("animate");
+      void messageEl.offsetWidth;
+      messageEl.classList.add("animate");
+    }
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.opacity = "1";
+      toastEl.style.transform = "translateX(-50%) translateY(-2px)";
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => {
+        toastEl.style.opacity = "0";
+        toastEl.style.transform = "translateX(-50%) translateY(0)";
+      }, 1200);
+    }
+
+    // Sound: tiny WebAudio blip
+    let audioCtx;
+    function blip(freq=740){
+      if(!soundOn) return;
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = "sine";
+        o.frequency.value = freq;
+        g.gain.value = 0.0001;
+        o.connect(g); g.connect(audioCtx.destination);
+
+        const t = audioCtx.currentTime;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.07, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+
+        o.start(t);
+        o.stop(t + 0.14);
+      }catch{}
+    }
+
+    // Confetti
+    function confettiBurst(){
+      if(!motionOn) return;
+      const colors = ["#ff4fa1","#ff7bc0","#ffd1e6","#f7b0ff","#ffffff","#ffb3d6"];
+      const n = 26;
+      for(let i=0;i<n;i++){
+        const el = document.createElement("div");
+        el.className = "conf";
+        const x = (Math.random()*100).toFixed(2)+"vw";
+        const c = colors[Math.floor(Math.random()*colors.length)];
+        const rot = (Math.random()*180-90).toFixed(1)+"deg";
+        const dx = (Math.random()*240-120).toFixed(1)+"px";
+        const t = (0.9+Math.random()*0.9).toFixed(2)+"s";
+        el.style.setProperty("--x", x);
+        el.style.setProperty("--c", c);
+        el.style.setProperty("--rot", rot);
+        el.style.setProperty("--dx", dx);
+        el.style.setProperty("--t", t);
+        confettiLayer.appendChild(el);
+        setTimeout(()=> el.remove(), 2200);
+      }
+    }
+
+    // Floaties
+    function spawnFloaties(){
+      floatLayer.innerHTML = "";
+      if(!motionOn) return;
+      const count = Math.min(22, Math.max(14, Math.floor(window.innerWidth / 60)));
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "float";
+        el.textContent = FLOAT_EMOJIS[Math.floor(Math.random()*FLOAT_EMOJIS.length)];
+        el.style.setProperty("--x", (Math.random()*100).toFixed(2)+"vw");
+        el.style.setProperty("--s", (14+Math.random()*20).toFixed(1)+"px");
+        el.style.setProperty("--o", (0.18+Math.random()*0.28).toFixed(2));
+        el.style.setProperty("--b", (Math.random()<0.25 ? (0.6+Math.random()*0.8).toFixed(1) : "0")+"px");
+        el.style.setProperty("--r", (Math.random()*90-45).toFixed(1)+"deg");
+        el.style.setProperty("--d", (10+Math.random()*10).toFixed(2)+"s");
+        el.style.setProperty("--drift", (Math.random()*160-80).toFixed(1)+"px");
+        el.style.animationDelay = (-Math.random()*10).toFixed(2)+"s";
+        floatLayer.appendChild(el);
+      }
+    }
+
+    // Reset content
+    function buildReset(){
+      const task = pick(TASKS);
+      const line = pick(CALM_LINES);
+      return {
+        task,
+        line,
+        createdAt: new Date().toISOString(),
+        labelTime: new Date().toLocaleTimeString(undefined, {hour:"2-digit", minute:"2-digit"})
+      };
+    }
+
+    function setResetUI(r){
+      currentReset = r;
+      messageEl.innerHTML = `✨ <span style="color:#ff2f97">Tiny task:</span> ${escapeHTML(r.task)}<br><span style="color:#7a4a62">“${escapeHTML(r.line)}”</span>`;
+      animateMsg();
+      hintEl.textContent = "Follow along for 30 seconds. You’re doing amazing.";
+    }
+
+    function escapeHTML(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Breathing phases (simple loop)
+    // inhale 4, hold 2, exhale 6, hold 2 = 14 sec cycle
+    const PHASES = [
+      {name:"Inhale", secs:4, freq:780},
+      {name:"Hold", secs:2, freq:860},
+      {name:"Exhale", secs:6, freq:620},
+      {name:"Hold", secs:2, freq:860},
+    ];
+    function phaseCycleSeconds(){ return PHASES.reduce((a,p)=>a+p.secs,0); }
+
+    function startBreathing(){
+      ring.classList.add("running");
+      ring.style.setProperty("--cycle", phaseCycleSeconds()+"s");
+      let phaseIndex = 0;
+
+      function runPhase(){
+        if(!running) return;
+        const p = PHASES[phaseIndex];
+        phaseEl.textContent = p.name;
+        blip(p.freq);
+        phaseIndex = (phaseIndex + 1) % PHASES.length;
+        phaseTimer = setTimeout(runPhase, p.secs * 1000);
+      }
+      runPhase();
+    }
+
+    function stopBreathing(){
+      ring.classList.remove("running");
+      phaseEl.textContent = "Tap reset";
+      clearTimeout(phaseTimer);
+      phaseTimer = null;
+    }
+
+    function startTimer(){
+      tLeft = RESET_SECONDS;
+      timerEl.textContent = String(tLeft);
+      clearInterval(tickTimer);
+
+      tickTimer = setInterval(() => {
+        tLeft--;
+        timerEl.textContent = String(Math.max(0, tLeft));
+        if(tLeft <= 0){
+          finishReset();
+        } else {
+          // tiny tick sound occasionally (not every second)
+          if(soundOn && (tLeft === 20 || tLeft === 10 || tLeft === 5)) blip(700);
+        }
+      }, 1000);
+    }
+
+    function stopTimer(){
+      clearInterval(tickTimer);
+      tickTimer = null;
+      timerEl.textContent = String(RESET_SECONDS);
+    }
+
+    function addRecent(r){
+      const recent = loadJSON(STORAGE.recent, []);
+      recent.push({ ...r });
+      const trimmed = recent.slice(-18);
+      saveJSON(STORAGE.recent, trimmed);
+      renderLists();
+    }
+
+    function addSaved(r){
+      const saved = loadJSON(STORAGE.saved, []);
+      // dedupe by task+line
+      const key = (x) => (x.task + "|" + x.line);
+      const exists = saved.some(x => key(x) === key(r));
+      if(exists) return false;
+      saved.push({ ...r });
+      saveJSON(STORAGE.saved, saved);
+      return true;
+    }
+
+    function renderLists(){
+      const saved = loadJSON(STORAGE.saved, []);
+      const recent = loadJSON(STORAGE.recent, []);
+
+      savedList.innerHTML = "";
+      recentList.innerHTML = "";
+
+      savedEmpty.style.display = saved.length ? "none" : "block";
+      recentEmpty.style.display = recent.length ? "none" : "block";
+
+      saved.slice().reverse().forEach((r) => {
+        savedList.appendChild(makeItem(r, {
+          meta: "saved",
+          useLabel: "✨",
+          onUse: () => {
+            if(running) stopReset();
+            setResetUI(r);
+            toast("Loaded 💗");
+            blip(820);
+          },
+          onRemove: () => {
+            const next = loadJSON(STORAGE.saved, []).filter(x => !(x.task===r.task && x.line===r.line));
+            saveJSON(STORAGE.saved, next);
+            renderLists();
+          }
+        }));
+      });
+
+      recent.slice().reverse().forEach((r) => {
+        recentList.appendChild(makeItem(r, {
+          meta: r.labelTime || "recent",
+          useLabel: "🫧",
+          onUse: () => {
+            if(running) stopReset();
+            setResetUI(r);
+            toast("Loaded 🫧");
+            blip(760);
+          },
+          onRemove: () => {
+            const next = loadJSON(STORAGE.recent, []).filter(x => !(x.task===r.task && x.line===r.line && x.labelTime===r.labelTime));
+            saveJSON(STORAGE.recent, next);
+            renderLists();
+          }
+        }));
+      });
+    }
+
+    function makeItem(r, {meta, useLabel, onUse, onRemove}){
+      const li = document.createElement("li");
+      li.className = "item";
+
+      const left = document.createElement("div");
+      const p = document.createElement("p");
+      p.textContent = r.task;
+
+      const small = document.createElement("small");
+      small.textContent = meta + " • " + (r.line || "");
+
+      left.appendChild(p);
+      left.appendChild(small);
+
+      const btns = document.createElement("div");
+      btns.className = "itemBtns";
+
+      const use = document.createElement("button");
+      use.className = "mini";
+      use.type = "button";
+      use.textContent = useLabel;
+      use.title = "Use this";
+      use.addEventListener("click", onUse);
+
+      const del = document.createElement("button");
+      del.className = "mini";
+      del.type = "button";
+      del.textContent = "🗑️";
+      del.title = "Remove";
+      del.addEventListener("click", onRemove);
+
+      btns.appendChild(use);
+      btns.appendChild(del);
+
+      li.appendChild(left);
+      li.appendChild(btns);
+      return li;
+    }
+
+    function stopReset(){
+      running = false;
+      resetBtn.disabled = false;
+      resetBtn.textContent = "🎀 Reset me";
+      stopTimer();
+      stopBreathing();
+      toast("Paused 🌙");
+    }
+
+    function finishReset(){
+      running = false;
+      clearInterval(tickTimer);
+      tickTimer = null;
+
+      stopBreathing();
+      phaseEl.textContent = "Done ✨";
+      timerEl.textContent = "0";
+      resetBtn.disabled = false;
+      resetBtn.textContent = "🎀 Reset again";
+
+      // Add to recent, confetti, small success message
+      if(currentReset) addRecent(currentReset);
+      messageEl.innerHTML = `💗 <span style="color:#ff2f97">Reset complete.</span> You did it.<br><span style="color:#7a4a62">Now pick the tiniest next step.</span>`;
+      animateMsg();
+      hintEl.textContent = "Proud of you. Seriously.";
+
+      confettiBurst();
+      blip(900); setTimeout(()=>blip(1020), 140);
+
+      bumpStreak();
+    }
+
+    // Simple “daily streak” counter (optional)
+    function bumpStreak(){
+      const todayKey = new Date().toISOString().slice(0,10);
+      const data = loadJSON(STORAGE.streak, {lastDay:"", streak:0});
+      if(data.lastDay === todayKey) return; // already counted today
+      if(data.lastDay){
+        const prev = new Date(data.lastDay);
+        const diffDays = Math.round((new Date(todayKey) - prev) / (1000*60*60*24));
+        if(diffDays === 1) data.streak += 1;
+        else data.streak = 1;
+      } else {
+        data.streak = 1;
+      }
+      data.lastDay = todayKey;
+      saveJSON(STORAGE.streak, data);
+      toast(`Streak: ${data.streak} day${data.streak===1?"":"s"} ✨`);
+    }
+
+    // Share link
+    async function copyLink(){
+      const url = location.href;
+      try{
+        await navigator.clipboard.writeText(url);
+        toast("Link copied 💞");
+        blip(820);
+      }catch{
+        toast("Copy blocked 😿");
+      }
+    }
+
+    // Settings
+    function loadSettings(){
+      const s = loadJSON(STORAGE.settings, {soundOn:true, motionOn:true});
+      soundOn = !!s.soundOn;
+      motionOn = !!s.motionOn;
+      soundBtn.setAttribute("aria-pressed", String(soundOn));
+      motionBtn.setAttribute("aria-pressed", String(motionOn));
+      soundBtn.textContent = soundOn ? "🔊 Sound" : "🔇 Sound";
+      motionBtn.textContent = motionOn ? "💫 Motion" : "🫧 Motion";
+      if(!motionOn){ floatLayer.innerHTML=""; confettiLayer.innerHTML=""; }
+      else spawnFloaties();
+    }
+    function saveSettings(){
+      saveJSON(STORAGE.settings, {soundOn, motionOn});
+    }
+
+    // Wire up buttons
+    resetBtn.addEventListener("click", () => {
+      if(running){
+        stopReset();
+        return;
+      }
+      running = true;
+      resetBtn.disabled = false;
+      resetBtn.textContent = "🌙 Pause";
+
+      const r = buildReset();
+      setResetUI(r);
+
+      startBreathing();
+      startTimer();
+
+      toast("Reset started ✨");
+      blip(780);
+    });
+
+    saveBtn.addEventListener("click", () => {
+      if(!currentReset){ toast("Tap Reset first 💗"); return; }
+      const added = addSaved(currentReset);
+      renderLists();
+      if(added){
+        toast("Saved 💗");
+        confettiBurst();
+        blip(900);
+      } else {
+        toast("Already saved ✨");
+      }
+    });
+
+    shareBtn.addEventListener("click", copyLink);
+
+    clearSaved.addEventListener("click", () => {
+      saveJSON(STORAGE.saved, []);
+      renderLists();
+      toast("Saved cleared 🧹");
+    });
+    clearRecent.addEventListener("click", () => {
+      saveJSON(STORAGE.recent, []);
+      renderLists();
+      toast("Recent cleared 🧹");
+    });
+
+    soundBtn.addEventListener("click", () => {
+      soundOn = !soundOn;
+      soundBtn.setAttribute("aria-pressed", String(soundOn));
+      soundBtn.textContent = soundOn ? "🔊 Sound" : "🔇 Sound";
+      saveSettings();
+      toast(soundOn ? "Sound on ✨" : "Sound off 🫧");
+      if(soundOn) blip(820);
+    });
+
+    motionBtn.addEventListener("click", () => {
+      motionOn = !motionOn;
+      motionBtn.setAttribute("aria-pressed", String(motionOn));
+      motionBtn.textContent = motionOn ? "💫 Motion" : "🫧 Motion";
+      saveSettings();
+      toast(motionOn ? "Motion on 💞" : "Motion off 🌙");
+      spawnFloaties();
+    });
+
+    window.addEventListener("resize", () => spawnFloaties());
+
+    // Init
+    (function init(){
+      todayLabel.textContent = formatDate(new Date());
+      loadSettings();
+      renderLists();
+      spawnFloaties();
+      timerEl.textContent = String(RESET_SECONDS);
+    })();
+  </script>
+</body>
+</html>
